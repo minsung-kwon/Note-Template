@@ -1,19 +1,30 @@
-ll D[505050], P[505050];
-vector<pair<ll,ll>> G[505050]; // {정점, 가중치}
-// 주의: 가중치 >= 0, 음수 있으면 bellman ford 사용
-
-// s -> t 최단 경로 출력
-void Dijkstra(int s, int t){
-    memset(D, 0x3f, sizeof D);
-    priority_queue<pair<ll,ll>, vector<pair<ll,ll>>, greater<>> Q;
-    Q.emplace(D[s]=0, s);
-    while(!Q.empty()){
-        auto [c,v] = Q.top(); Q.pop();
-        if(c == D[v]) for(auto [i,w] : G[v]) if(D[i] > c + w) Q.emplace(D[i]=c+w, i), P[i] = v;
+ll dijkstra(const vector<vector<pair<ll, ll>>> &G, ll s, ll t) {
+    const ll INF = LLONG_MAX; // 혹은 0x3f3f3f3f3f3f3f3f 사용 가능
+    int n = (int)G.size();
+    vector<ll> dist(n, INF);
+    vector<int> P(n, -1); // 경로 복원을 위한 부모 배열(필요 없으면 생략)
+    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<>> pq;
+    dist[s] = 0; pq.push({0ll, s});
+    while(!pq.empty()){
+        auto [cdist, u] = pq.top(); pq.pop();
+        if(dist[u] < cdist) continue;
+        for(auto &[v, w] : G[u]) {
+            ll ndist = cdist + w;
+            if(dist[v] > ndist) {
+                dist[v] = ndist;
+                P[v] = u; // 경로 복원용
+                pq.push({ndist, v});
+            }
+        }
     }
+    if(dist[t] == INF) {
+        return -1;
+    }
+    return dist[t];
+    // --- 경로 복원 (필요시 사용) ---
     vector<int> path;
-    for(int i=t; i!=s; i=P[i]) path.push_back(i);
-    path.push_back(s);
+    for(int cur = t; cur != -1; cur = P[cur]) {
+        path.push_back(cur);
+    }
     reverse(path.begin(), path.end());
-    for(auto i : path) cout << i << " ";
 }
