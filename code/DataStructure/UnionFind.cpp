@@ -1,5 +1,5 @@
 void init(int n){
-  for(int i=1; i<=n; i++) par[i] = i, rank[i] = 1;
+  for(int i=1; i<=n; i++) par[i] = i, Rank[i] = 1;
 }
 int find(int v){
   if(v == par[v]) return v;
@@ -8,7 +8,7 @@ int find(int v){
 bool merge(int u, int v){
   u = find(u), v = find(v);
   if(u == v) return true;
-  if(rank[u] > rank[v]) swap(u, v);
+  if(Rank[u] > Rank[v]) swap(u, v);
   par[u] = v;
-  if(rank[u] == rank[v]) rank[v]++;
+  if(Rank[u] == Rank[v]) rank[v]++;
 }
