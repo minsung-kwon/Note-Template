@@ -10,5 +10,5 @@ bool merge(int u, int v){
   if(u == v) return true;
   if(Rank[u] > Rank[v]) swap(u, v);
   par[u] = v;
-  if(Rank[u] == Rank[v]) rank[v]++;
+  if(Rank[u] == Rank[v]) Rank[v]++;
 }
