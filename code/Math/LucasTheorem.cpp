@@ -4,7 +4,6 @@
 // 주의: P는 소수
 // P가 크고(약 10억) n,r이 작으면(1000만 이하)
 // 생성자에서 fac, inv를 1000만까지만 구해도 됨
-
 struct Lucas{ // init : O(P), query : O(log P)
     const size_t P;
     vector<ll> fac, inv;
