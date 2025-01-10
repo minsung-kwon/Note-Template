@@ -1,15 +1,12 @@
 int N, Q, A[SZ], Top[SZ], Par[SZ], Dep[SZ], Sz[SZ], In[SZ];
 vector<int> Inp[SZ], G[SZ];
-
 void Connect(int u, int v){
     Inp[u].push_back(v); Inp[v].push_back(u);
 }
-
 void DFS0(int v, int b=-1){
     for(auto i : Inp[v]) if(i != b)
         Dep[i] = Dep[v] + 1, Par[i] = v, G[v].push_back(i), DFS0(i, v);
 }
-
 void DFS1(int v){
     Sz[v] = 1;
     for(auto &i : G[v]){
@@ -17,16 +14,13 @@ void DFS1(int v){
         if(Sz[i] > Sz[G[v][0]]) swap(i, G[v][0]);
     }
 }
-
 void DFS2(int v){
     static int pv = 0; In[v] = ++pv;
     for(auto i : G[v]) Top[i] = i == G[v][0] ? Top[v] : i, DFS2(i);
 }
-
 void VertexUpdate(int x, int v){
     Update(In[x], v);
 }
-
 long long PathQuery(int u, int v){
     long long res = 0;
     for(; Top[u] != Top[v]; u=Par[Top[u]]){
