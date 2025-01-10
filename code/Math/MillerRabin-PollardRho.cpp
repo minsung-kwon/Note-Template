@@ -12,9 +12,6 @@ void Sieve(){
         }
     }
 }
-
-using ll = long long;
-using ull = unsigned long long;
 ull MulMod(ull a, ull b, ull c){ return (__uint128_t)a * b % c; }
 ull PowMod(ull a, ull b, ull c){
     ull res = 1; a %= c;
